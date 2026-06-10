@@ -1,0 +1,36 @@
+{
+  "client_name": "Meridian Markets Data",
+  "currency_symbol": "$",
+  "fiscal_year_start_month": 1,
+  "fiscal_year": 2026,
+  "fy_label": "FY26",
+  "value_label": "ARR",
+  "stages": [
+    {"name": "Discovery", "probability": 0.10},
+    {"name": "Qualification", "probability": 0.25},
+    {"name": "Business Case", "probability": 0.40},
+    {"name": "Proposal", "probability": 0.60},
+    {"name": "Negotiation", "probability": 0.80}
+  ],
+  "won_stage": "Closed Won",
+  "lost_stage": "Closed Lost",
+  "forecast_categories": {
+    "pipeline": "Pipeline",
+    "best_case": "Best Case",
+    "commit": "Commit",
+    "closed": "Closed"
+  },
+  "use_include_forecast_flag": true,
+  "deal_bands": [
+    {"name": "Small", "min": 0},
+    {"name": "Mid", "min": 25000},
+    {"name": "Large", "min": 75000},
+    {"name": "Strategic", "min": 150000}
+  ],
+  "large_bands": ["Large", "Strategic"],
+  "icp_grades": ["A", "B", "C", "D", "Ungraded"],
+  "deal_quality_flags": [
+    {"column": "ROI Analysis", "label": "ROI analysis", "min_stage_index": 2, "min_value": 30000},
+    {"column": "Value Map", "label": "Value map", "min_stage_index": 2, "min_value": 50000}
+  ]
+}
