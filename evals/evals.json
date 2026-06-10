@@ -1,0 +1,19 @@
+{
+  "skill_name": "gtm-dashboard-builder",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "I'm running a GTM advisory engagement with Lexa Compliance Cloud, a fintech SaaS company. Their CEO wants visibility into pipeline health and how each seller is performing. I have their Salesforce opportunity export (lexa_sfdc_export.csv) and their plan/quota numbers (lexa_targets.csv). Their open sales stages in order are Qualify (10%), Develop (30%), Propose (55%), Negotiate (75%); closed stages are 'Won' and 'Lost'. Forecast categories are Pipeline, Upside (their term for best case), Commit, Closed. Deal value column is ARR in USD. Deal-size bands: Small under $25k, Mid $25k-$75k, Large $75k and up; 'Large' counts as their big-deal tier. Fiscal year is the calendar year. Today is 10 June 2026. Build the CEO dashboards as an Excel workbook: quarterly forecast, full-year pipeline view, and seller scorecards.",
+      "expected_output": "Multi-tab xlsx with quarterly forecast, FY pipeline, seller scorecards; client's own stage names and bands; numbers reconcile to the CSV; attainment uses supplied quotas.",
+      "files": ["test-inputs/lexa_sfdc_export.csv", "test-inputs/lexa_targets.csv"],
+      "assertions": []
+    },
+    {
+      "id": 1,
+      "prompt": "A fintech client (Lexa Compliance Cloud) gave me their Salesforce pipeline export (lexa_sfdc_export.csv) but they haven't supplied quotas or an annual plan yet — that's coming next week. Stages: Qualify 10%, Develop 30%, Propose 55%, Negotiate 75%, closed are Won/Lost. Forecast categories Pipeline/Upside/Commit/Closed, value column ARR ($). Bands Small <$25k, Mid $25k-$75k, Large ≥$75k. Calendar fiscal year, today is 10 June 2026. I still want to show the CEO pipeline health and seller performance dashboards now — build what you can in Excel and make it obvious which numbers are waiting on their targets rather than making anything up.",
+      "expected_output": "Workbook builds without targets; attainment/coverage cells clearly marked awaiting input, not zero or fabricated; README flags missing targets.",
+      "files": ["test-inputs/lexa_sfdc_export.csv"],
+      "assertions": []
+    }
+  ]
+}
