@@ -1,9 +1,20 @@
 ---
 name: gtm-dashboard-builder
-description: Build CEO-ready GTM dashboards — pipeline health, sales forecast, and seller scorecards — as a multi-tab Excel workbook populated from a client's Salesforce data (via a connected Salesforce MCP, or a CSV export fallback). Use whenever the user wants pipeline-health dashboards, forecast dashboards, seller/rep scorecards, attainment reporting, weighted-pipeline views, pipe-coverage analysis, or anything that sounds like "give the CEO/CRO visibility into the pipeline and how each seller is performing." Trigger on phrases like "pipeline dashboard", "forecast dashboard", "seller scorecard", "rep scorecard", "pipeline health", "build dashboards from Salesforce/our CRM", "quota attainment report" — even if the user doesn't say "dashboard". Do NOT trigger for one-off SOQL queries, CRM data cleanup, or designing the meetings where dashboards get reviewed (that's gtm-cadence-builder).
+description: >-
+  Build CEO-ready GTM dashboards for a client — pipeline health, sales forecast and seller
+  scorecards — as one multi-tab Excel workbook populated from their CRM data, via a connected
+  Salesforce MCP or a CSV export. Every stage name, probability, deal band, grade and target
+  comes from the client profile for that engagement; nothing is hard-coded to any one company's
+  CRM. Use for pipeline-health or forecast dashboards, seller and rep scorecards, attainment
+  reporting, weighted-pipeline views, pipe-coverage analysis, or anything like give the CEO
+  visibility into the pipeline and how each seller is performing. Do NOT use for one-off SOQL
+  queries, CRM data cleanup, designing the meetings where dashboards get reviewed, which is
+  gtm-cadence-builder, or account grading and territory design, which is icp-builder.
 ---
 
 # GTM Dashboard Builder
+
+**Build:** `gtm-dashboard-builder · 2026-08-05 · client-configured`
 
 Build three connected dashboards as one Excel workbook, populated with the client's real CRM data:
 
@@ -11,11 +22,35 @@ Build three connected dashboards as one Excel workbook, populated with the clien
 2. **FY Sales Forecast & Pipeline** — full-year KPI scorecard, forecast confidence by quarter, open pipeline by deal-size band, by product, and by stage across quarters.
 3. **Seller Performance** — per-rep forecast rollup, quarterly scorecard (attainment, ASP, forecast attainment, weighted pipe coverage, large-deal mix), trailing + current quarter scorecard, open pipeline by rep × stage and rep × deal band, deal review.
 
-Every label — stage names, deal-size bands, account grades, products, fiscal calendar — comes from a per-client config. Nothing is hard-coded to any one company's CRM.
+Every label — stage names, deal-size bands, account grades, products, fiscal calendar — comes from the client's own profile. Nothing is hard-coded to any one company's CRM.
+
+## The client owns the values. This skill owns the method.
+
+**Never hard-code a stage name, a probability, a band threshold, a grade, a target or a field
+mapping into this file, its references or its scripts.** Two files carry them, and the direction
+between them matters:
+
+- **`client-profile.md`** — the engagement's source of truth, written with the client in their
+  language. Copy `client-profile.example.md` and work through it.
+- **`config.json`** — **generated from the profile**, not authored alongside it. It exists because
+  the build script needs machine-readable values; it is a build artefact. **If the two ever
+  disagree, the profile wins and the config is stale — regenerate it rather than editing it.**
+
+*(Why the direction is stated: a config edited directly is a second home for the same value, and
+the two copies drift in the direction nobody is reading.)*
+
+**Failure mode — stop, don't improvise.** If the profile cannot be read and the client cannot be
+asked, **stop and say so. Never assume a stage list, a probability table or a set of bands to keep
+the build moving.** A workbook is the most authoritative-looking artefact in this toolkit: wrong
+values arrive formatted, totalled and traceable-looking, and get taken into a board meeting. No
+profile, no workbook.
 
 ## Workflow
 
 ### Step 1 — Intake: learn the client's CRM vocabulary
+
+**Work through `client-profile.md`.** If it does not exist yet, copy `client-profile.example.md`
+and fill it with the client — that is this step, not a preliminary to it.
 
 The dashboards are only as credible as the mapping behind them. A CEO will dismiss the whole workbook over one wrong stage name. Before touching data, establish (use AskUserQuestion if the user is present; otherwise pull from engagement notes):
 
@@ -28,7 +63,7 @@ The dashboards are only as credible as the mapping behind them. A CEO will dismi
 7. **Targets** — AOP (company plan) per quarter/FY and quota per rep per quarter. These are never in Salesforce opportunity data; the client supplies them.
 8. **Deal-quality flags** (optional) — checkbox fields the org uses for deal discipline (e.g. ROI analysis done, value map built) and the eligibility rule (min stage, min value).
 
-Record the answers in `config.json` (schema below, worked example in `assets/config-example.json`).
+Record the answers in `client-profile.md`. **The config is generated from it in step 3** — do not write the two by hand and hope they agree.
 
 ### Step 2 — Get the data
 
@@ -46,7 +81,13 @@ Either way, end this step with up to three CSVs in a working folder:
 
 Exact column contracts are in `references/salesforce-pull.md`. Missing optional columns are fine — the script degrades gracefully and notes what it skipped.
 
-### Step 3 — Write `config.json`
+### Step 3 — Generate `config.json` from the profile
+
+**Transcribe, don't decide.** Every value below comes from a line in `client-profile.md`; if one is
+missing there, the answer is to go back and ask, not to pick a plausible default. The shape is
+fixed — the schema is the script's contract — but nothing in it is this skill's to choose.
+
+The schema, with illustrative values (**an example of the shape, not a starting set**):
 
 ```json
 {
@@ -82,6 +123,10 @@ Exact column contracts are in `references/salesforce-pull.md`. Missing optional 
   ]
 }
 ```
+
+**Regenerate rather than edit.** When the client corrects a stage name or a threshold, change
+`client-profile.md` and rebuild the config from it. A hand-patched config is a second source, and it
+will be the one that is wrong.
 
 Notes that matter: `stages` lists *open* stages in funnel order — won/lost are separate keys. `probability` drives Weighted Pipeline; confirm the weighting table with the client rather than inventing one. `min_stage_index` is a 0-based index into `stages`. Set `icp_grades` to `[]` and `deal_quality_flags` to `[]` to drop those features cleanly. The fiscal year is labelled by the calendar year in which it starts.
 
