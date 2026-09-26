@@ -1,8 +1,8 @@
 ---
 name: gtm-dashboard-builder
 description: >-
-  Build CEO-ready GTM dashboards for a client — pipeline health, sales forecast and seller scorecards
-  — as one multi-tab Excel workbook populated from their CRM data, via a connected Salesforce MCP or a
+  Build CEO-ready GTM dashboards for a client – pipeline health, sales forecast and seller scorecards
+  – as one multi-tab Excel workbook populated from their CRM data, via a connected Salesforce MCP or a
   CSV export. Every stage name, probability, deal band, grade and target comes from the client profile
   for that engagement; nothing is hard-coded to any one company's CRM. Use for pipeline-health or
   forecast dashboards, seller and rep scorecards, attainment reporting, weighted-pipeline views,
@@ -14,7 +14,7 @@ description: >-
 
 # GTM Dashboard Builder
 
-**Build:** `gtm-dashboard-builder · 2026-09-26 · skill-text`
+**Build:** `gtm-dashboard-builder · 2026-09-26 · package-clean`
 
 Build three connected dashboards as one Excel workbook, populated with the client's real CRM data:
 
