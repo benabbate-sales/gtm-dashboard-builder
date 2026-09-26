@@ -1,20 +1,20 @@
 ---
 name: gtm-dashboard-builder
 description: >-
-  Build CEO-ready GTM dashboards for a client — pipeline health, sales forecast and seller
-  scorecards — as one multi-tab Excel workbook populated from their CRM data, via a connected
-  Salesforce MCP or a CSV export. Every stage name, probability, deal band, grade and target
-  comes from the client profile for that engagement; nothing is hard-coded to any one company's
-  CRM. Use for pipeline-health or forecast dashboards, seller and rep scorecards, attainment
-  reporting, weighted-pipeline views, pipe-coverage analysis, or anything like give the CEO
-  visibility into the pipeline and how each seller is performing. Do NOT use for one-off SOQL
-  queries, CRM data cleanup, designing the meetings where dashboards get reviewed, which is
-  gtm-cadence-builder, or account grading and territory design, which is icp-builder.
+  Build CEO-ready GTM dashboards for a client — pipeline health, sales forecast and seller scorecards
+  — as one multi-tab Excel workbook populated from their CRM data, via a connected Salesforce MCP or a
+  CSV export. Every stage name, probability, deal band, grade and target comes from the client profile
+  for that engagement; nothing is hard-coded to any one company's CRM. Use for pipeline-health or
+  forecast dashboards, seller and rep scorecards, attainment reporting, weighted-pipeline views,
+  pipe-coverage analysis, or anything like give the CEO visibility into the pipeline and how each
+  seller is performing. Do NOT use for one-off SOQL queries or CRM data cleanup; for designing the
+  meetings where dashboards get reviewed, which is gtm-cadence-builder; or for account grading and
+  territory design, which is icp-builder.
 ---
 
 # GTM Dashboard Builder
 
-**Build:** `gtm-dashboard-builder · 2026-08-05 · client-configured`
+**Build:** `gtm-dashboard-builder · 2026-09-26 · skill-text`
 
 Build three connected dashboards as one Excel workbook, populated with the client's real CRM data:
 
@@ -172,3 +172,6 @@ If the engagement is recurring, offer to re-run the pull + build on a schedule s
 - **Never present a guessed field mapping as fact.** Standard Salesforce fields (Name, StageName, Type, CloseDate, Owner, ForecastCategory, CreatedDate) are reliable; everything custom must be verified per org or flagged.
 - **Targets never come from opportunity data.** AOP and quota are supplied inputs; if the client hasn't provided them, build the workbook anyway and leave the attainment cells visibly marked as awaiting targets — don't fabricate.
 - **Generic output is worthless.** The deliverable must use the client's own stage names, bands, grades, and products throughout. If intake answers are missing, ask — don't fill with defaults silently.
+
+---
+*Current as of: 26 Sep 2026. History: git.*
